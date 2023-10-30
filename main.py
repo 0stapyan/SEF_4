@@ -54,6 +54,25 @@ def average_online_time_for_user(user_id):
         "dailyAverage": 0
     }
 
+def forget_user_data(user_id):
+
+    users_data = fetch_user_data(0)
+    user_exists = False
+
+    for user in users_data:
+        if user.get('userId') == user_id:
+            user_exists = True
+            break
+
+    if user_exists:
+        updated_user_data = [user for user in users_data if user.get('userId') != user_id]
+
+        return {"userId": user_id}
+
+    else:
+        return {"error": "User not found"}
+
+
 
 
 
@@ -63,8 +82,12 @@ def main():
 
     total = total_online_time_for_user(user_id)
     print(total)
+
     average = average_online_time_for_user(user_id)
     print(average)
+
+    gdpr = forget_user_data(user_id)
+    print(gdpr)
 
 
 
